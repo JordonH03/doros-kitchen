@@ -1,6 +1,4 @@
 
-import "./root.css"
-import "./index.css"
 import { isRouteErrorResponse, Outlet, Scripts, ScrollRestoration } from "react-router"
 import type { Route } from "./+types/root"
 
