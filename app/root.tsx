@@ -1,9 +1,19 @@
-
-import { isRouteErrorResponse, Outlet, Scripts, ScrollRestoration } from "react-router"
+import {
+    isRouteErrorResponse,
+    Links,
+    Outlet,
+    Scripts,
+    ScrollRestoration,
+} from "react-router"
 import type { Route } from "./+types/root"
+import { TimerProvider } from "@/util/timer/TimerContext"
 
 export default function App() {
-    return <Outlet />
+    return (
+        <TimerProvider>
+            <Outlet />
+        </TimerProvider>
+    )
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
