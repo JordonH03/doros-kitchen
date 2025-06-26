@@ -1,0 +1,28 @@
+
+.cta
+{
+    &__group
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.button
+{
+    cursor: pointer;
+
+    &__settings
+    {
+        border-radius: 100%;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+}

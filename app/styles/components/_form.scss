@@ -1,0 +1,22 @@
+
+.settings-form
+{
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    margin-bottom: 1rem;
+
+    & > label
+    {
+        display: flex;
+        flex-direction: column;
+        max-width: 100%;
+
+        margin-bottom: 0.5rem;
+
+        & > input
+        {
+            max-width: 64px;
+        }
+    }
+}
