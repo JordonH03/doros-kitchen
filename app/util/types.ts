@@ -4,6 +4,13 @@ export interface ModalProps {
     onClose: () => void;
 }
 
+export interface TimerSettings {
+    pomodoro: number;
+    shortBreak: number;
+    longBreak: number;
+    interval: number;
+}
+
 export interface TimerState {
     pomodoro: number;
     shortBreak: number;
@@ -11,6 +18,7 @@ export interface TimerState {
     isRunning: boolean;
     timeLeft: number;
     currentSession: "pomodoro" | "short" | "long";
+    maxInterval: number;
     interval: number;
 }
 
@@ -24,4 +32,5 @@ export type TimerAction =
     | { type: "RESET_TIMER" }
     | { type: "TICK" }
     | { type: "SET_INTERVAL", payload: number }
-    | { type: "TRANSITION" }
+    | { type: "SWITCH_SESSION" }
+    | { type: "UPDATE_TIMER", payload: TimerSettings }

@@ -1,18 +1,12 @@
 import { MAX_INTERVAL, MAX_TIME, MIN_INTERVAL, MIN_TIME } from "@/util/constants"
 import { useTimer } from "@/util/timer/TimerContext"
 import type { ModalProps } from "@/util/types"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
 export default function Settings({ isOpen, onClose }: ModalProps) {
     const { state, dispatch } = useTimer()
-    const [timerConfig, setTimerConfig] = useState(state)
     const modalRef = useRef<HTMLDialogElement>(null)
-
-    useEffect(() => {
-        if (isOpen) {
-            setTimerConfig(state)
-        }
-    }, [isOpen, state])
+    const formRef = useRef<HTMLFormElement>(null)
 
     useEffect(() => {
         const modalElement = modalRef.current
@@ -39,92 +33,83 @@ export default function Settings({ isOpen, onClose }: ModalProps) {
     }, [onClose])
 
     const handleSave = () => {
+        const form = formRef.current as HTMLFormElement | null;
+        if (!form) return;
+        
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        } 
+
         dispatch({"type": "RESET_TIMER"})
-        dispatch({"type": "SET_POMODORO", "payload": timerConfig.pomodoro})
-        dispatch({"type": "SET_SHORT_BREAK", "payload": timerConfig.shortBreak})
-        dispatch({"type": "SET_LONG_BREAK", "payload": timerConfig.longBreak})
-        dispatch({"type": "SET_INTERVAL", "payload": timerConfig.interval})
-        dispatch({"type": "START_TIMER"})
+        const formData = new FormData(form);
+        
+        dispatch({
+            type: "UPDATE_TIMER",
+            payload: {
+                pomodoro: Number(formData.get('pomodoro')), 
+                shortBreak: Number(formData.get('shortBreak')), 
+                longBreak: Number(formData.get('longBreak')), 
+                interval: Number(formData.get('interval')) 
+            }
+        });
+
         onClose()
     }
 
     return (
         <dialog id="settings-modal" className="modal" ref={modalRef}>
             <h2>Settings</h2>
-            <div className="settings-form">
+            <form className="settings-form" ref={formRef}>
                 <label>
                     Pomodoro
                     <input
-                        type="number"
                         name="pomodoro"
+                        required
+                        type="number"
                         max={MAX_TIME}
                         min={MIN_TIME}
-                        value={timerConfig.pomodoro}
-                        onChange={(e) =>
-                            setTimerConfig({
-                                ...timerConfig,
-                                pomodoro: Number(e.target.value),
-                            })
-                        }
+                        defaultValue={state.pomodoro}
                     />
                 </label>
                 <label>
                     Short Break
                     <input
-                        type="number"
                         name="shortBreak"
+                        required
+                        type="number"
                         max={MAX_TIME}
                         min={MIN_TIME}
-                        value={timerConfig.shortBreak}
-                        onChange={(e) =>
-                            setTimerConfig({
-                                ...timerConfig,
-                                shortBreak: Number(e.target.value),
-                            })
-                        }
+                        defaultValue={state.shortBreak}
                     />
                 </label>
                 <label>
                     Long Break
                     <input
-                        type="number"
                         name="longBreak"
+                        required
+                        type="number"
                         max={MAX_TIME}
                         min={MIN_TIME}
-                        value={timerConfig.longBreak}
-                        onChange={(e) =>
-                            setTimerConfig({
-                                ...timerConfig,
-                                longBreak: Number(e.target.value),
-                            })
-                        }
+                        defaultValue={state.longBreak}
                     />
                 </label>
                 <label>
                     Long Break Interval
                     <input
+                        required
+                        name="interval"
                         type="number"
-                        name="longBreakInterval"
                         max={MAX_INTERVAL}
                         min={MIN_INTERVAL}
-                        value={timerConfig.interval}
-                        onChange={(e) =>
-                            setTimerConfig({
-                                ...timerConfig,
-                                interval: Number(e.target.value),
-                            })
-                        }
+                        defaultValue={state.interval}
                     />
                 </label>
-            </div>
-            <div className="cta__group">
-                <button className="button" type="button" onClick={onClose}>
-                    Cancel
-                </button>
-                <button className="button" type="button" onClick={handleSave}>
-                    Save
-                </button>
-            </div>
+                <div className="cta__group">
+                    <input className="button cta__button" type="button" value="Cancel" onClick={onClose} />
+                    <input className="button cta__button" type="button" value="Save" onClick={handleSave} />
+                </div>
+            </form>
         </dialog>
     )
 }

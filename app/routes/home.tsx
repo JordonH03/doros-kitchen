@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react"
 import Settings from "@/components/settings"
 import { useTimer } from "@/util/timer/TimerContext"
 import { GearIcon } from "@radix-ui/react-icons"
+import { formatTime } from "@/util/timer/timerUtils"
+import { TICK_INTERVAL } from "@/util/constants"
 
 export default function Home() {
     const { state, dispatch } = useTimer()
@@ -20,7 +22,11 @@ export default function Home() {
 
             timerRef.current = setInterval(() => {
                 dispatch({ type: "TICK" })
-            }, 100)
+            }, TICK_INTERVAL)
+        }
+
+        if (state.timeLeft <= 0) {
+            dispatch({ type: "SWITCH_SESSION" })
         }
 
         return () => {
@@ -36,7 +42,7 @@ export default function Home() {
                 <button className="button__settings" onClick={() => setSettingsOpen(true)}><GearIcon /></button>
                 <div>
                     <p>{state.currentSession}</p>
-                    <p>{Math.floor(state.timeLeft / 100)}</p>
+                    <p>{formatTime(state.timeLeft)}</p>
                 </div>
                 <button onClick={() => dispatch({ type: "TOGGLE_TIMER" })}>{state.isRunning ? "Pause" : "Play"}</button>
                 <Settings isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />

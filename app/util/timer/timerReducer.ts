@@ -1,6 +1,6 @@
 import { useReducer } from "react"
 import type { TimerAction, TimerState } from "../types"
-import { INITIAL_SETTINGS, MINUTES_2_SECONDS } from "../constants"
+import { INITIAL_SETTINGS, MINUTES_2_MILLISECONDS } from "../constants"
 
 export function timerReducer(state: TimerState, action: TimerAction): TimerState {
     const STUDY_SESSION = "pomodoro"
@@ -9,7 +9,7 @@ export function timerReducer(state: TimerState, action: TimerAction): TimerState
 
     switch (action.type) {
         case "SET_POMODORO":
-            return { ...state, pomodoro: action.payload, timeLeft: action.payload * MINUTES_2_SECONDS }
+            return { ...state, pomodoro: action.payload, timeLeft: action.payload * MINUTES_2_MILLISECONDS }
         case "SET_SHORT_BREAK":
             return { ...state, shortBreak: action.payload }
         case "SET_LONG_BREAK":
@@ -20,47 +20,57 @@ export function timerReducer(state: TimerState, action: TimerAction): TimerState
             return {
                 ...state,
                 isRunning: false,
-                timeLeft: state.pomodoro * MINUTES_2_SECONDS,
+                timeLeft: state.pomodoro * MINUTES_2_MILLISECONDS,
                 currentSession: STUDY_SESSION,
-                interval: state.interval,
+                interval: state.maxInterval,
             }
         case "TICK":
             if (state.timeLeft <= 0) {
-                return state // No change if timeLeft is already 0
+                return state
             }
             return { ...state, timeLeft: state.timeLeft - 10 }
         case "SET_INTERVAL":
-            return { ...state, interval: action.payload }
-        case "TRANSITION":
+            return { ...state, maxInterval: action.payload, interval: action.payload }
+        case "SWITCH_SESSION":
             if (state.currentSession === STUDY_SESSION) {
                 if (state.interval > 1) {
                     return {
                         ...state,
                         currentSession: BREAK_SESSION,
-                        timeLeft: state.shortBreak * MINUTES_2_SECONDS,
+                        timeLeft: state.shortBreak * MINUTES_2_MILLISECONDS,
                         interval: state.interval - 1,
                     }
                 } else {
                     return {
                         ...state,
                         currentSession: LONG_BREAK_SESSION,
-                        timeLeft: state.longBreak * MINUTES_2_SECONDS,
-                        interval: 4, // Reset interval after long break
+                        timeLeft: state.longBreak * MINUTES_2_MILLISECONDS,
+                        interval: state.interval - 1,
                     }
                 }
             } else if (state.currentSession === BREAK_SESSION) {
                 return {
                     ...state,
                     currentSession: STUDY_SESSION,
-                    timeLeft: state.pomodoro * MINUTES_2_SECONDS,
+                    timeLeft: state.pomodoro * MINUTES_2_MILLISECONDS,
                 }
-            } else if (state.currentSession === LONG_BREAK_SESSION) {
+            } else {
                 return {
                     ...state,
                     currentSession: STUDY_SESSION,
-                    timeLeft: state.pomodoro * MINUTES_2_SECONDS,
-                    interval: 4, // Reset interval after long break
+                    timeLeft: state.pomodoro * MINUTES_2_MILLISECONDS,
+                    interval: state.maxInterval,
                 }
+            }
+        case "UPDATE_TIMER":
+            return {
+                ...state,
+                pomodoro: action.payload.pomodoro,
+                shortBreak: action.payload.shortBreak,
+                longBreak: action.payload.longBreak,
+                interval: action.payload.interval,
+                timeLeft: action.payload.pomodoro * MINUTES_2_MILLISECONDS,
+                currentSession: STUDY_SESSION,
             }
         default:
             return state
@@ -94,7 +104,7 @@ export function usePomodoroTimer() {
     }
 
     function transitionSession() {
-        dispatch({ type: "TRANSITION" })
+        dispatch({ type: "SWITCH_SESSION" })
     }
 
     return {
