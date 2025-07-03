@@ -1,0 +1,46 @@
+
+.cta
+{
+    &__group
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    &__button
+    {
+        cursor: default;
+
+        &:hover
+        {
+            cursor: pointer;
+        }
+
+        height: 40px;
+        padding: 0 1rem;
+        font-weight: 400;
+        font-size: 1rem;
+        text-align: center;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 2rem;
+    }
+}
+
+
+.modal {
+    position: absolute;
+    border: 4px solid $text-base;
+    background-color: $primary-base;
+}
+
+.settings-form
+{
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    margin-bottom: 1rem;
+
+    
+}

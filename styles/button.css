@@ -1,0 +1,25 @@
+.button__settings {
+  border-radius: 100%;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background-color: hsl(359, 100%, 89%);
+  border-color: hsl(345, 13%, 18%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button__white {
+  background-color: hsl(60, 100%, 100%);
+  border-color: hsl(0, 0%, 88%);
+}
+.button__white:hover {
+  background-color: hsl(0, 0%, 97%);
+}
+.button__primary {
+  background-color: hsl(129, 60%, 85%);
+  border-color: hsl(129, 22%, 54%);
+}
+.button__primary:hover {
+  background-color: hsl(130, 73%, 78%);
+}/*# sourceMappingURL=button.css.map */

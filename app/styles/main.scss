@@ -1,6 +1,5 @@
 
 @charset 'UTF-8';
 
-@import 'base/_base';
-
-@import 'components/_components';
+@import './base';
+@import './components/components';
