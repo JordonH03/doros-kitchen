@@ -74,5 +74,9 @@ export function links() {
             rel: "stylesheet",
             href: "../styles/main.css",
         },
+        {
+            rel: "manifest",
+            href: "/app.webmanifest",
+        }
     ]
 }

@@ -1,0 +1,34 @@
+{
+    "name": "Doro's Kitchen",
+    "short_name": "Doro",
+    "icons": [
+        {
+            "src": "icons/192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "icons/384.png",
+            "type": "image/png",
+            "sizes": "384x384"
+        },
+        {
+            "src": "icons/512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icons/1024.png",
+            "type": "image/png",
+            "sizes": "1024x1024",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "hsl(359, 100%, 89%)",
+    "background_color": "hsl(22,66%,94%)",
+    "lang": "en",
+    "dir": "ltr"
+}
