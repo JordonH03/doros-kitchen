@@ -72,6 +72,7 @@ export function links() {
         },
         {
             rel: "stylesheet",
+            type: "text/css",
             href: "../styles/main.css",
         },
         {
