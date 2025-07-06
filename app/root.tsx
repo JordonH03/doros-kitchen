@@ -7,6 +7,7 @@ import {
 } from "react-router"
 import type { Route } from "./+types/root"
 import { TimerProvider } from "@/util/timer/TimerContext"
+import '../styles/main.css'
 
 export default function App() {
     return (
@@ -69,11 +70,6 @@ export function links() {
             rel: "icon",
             type: "image/svg+xml",
             href: "/vite.svg",
-        },
-        {
-            rel: "stylesheet",
-            type: "text/css",
-            href: "../styles/main.css",
         },
         {
             rel: "manifest",
