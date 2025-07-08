@@ -7,7 +7,7 @@ import {
 } from "react-router"
 import type { Route } from "./+types/root"
 import { TimerProvider } from "@/util/timer/TimerContext"
-import '../styles/main.css'
+import '@/styles/main.scss'
 
 export default function App() {
     return (
@@ -74,6 +74,19 @@ export function links() {
         {
             rel: "manifest",
             href: "/app.webmanifest",
-        }
+        },
+        {
+            rel: "preconnect",
+            href: "https://fonts.googleapis.com",
+        },
+        {
+            rel: "preconnect",
+            href: "https://fonts.gstatic.com",
+            crossOrigin: "anonymous",
+        },
+        {
+            rel: "stylesheet",
+            href: "https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Cherry+Swash:wght@400;700&display=swap"
+        },
     ]
 }

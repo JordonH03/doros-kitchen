@@ -58,7 +58,7 @@ export default function Settings({ isOpen, onClose }: ModalProps) {
     }
 
     return (
-        <dialog id="settings-modal" className="modal" ref={modalRef}>
+        <dialog id="settings-modal" className="settings-modal" ref={modalRef}>
             <h2 className="form-heading">Settings</h2>
             <form className="settings-form" ref={formRef}>
                 <SettingsField
@@ -91,13 +91,13 @@ export default function Settings({ isOpen, onClose }: ModalProps) {
                 />
                 <div className="cta__group">
                     <input
-                        className="button cta__button button__white"
+                        className="button button__variant__white button__size__lg"
                         type="button"
                         value="Cancel"
                         onClick={onClose}
                     />
                     <input
-                        className="button cta__button button__primary"
+                        className="button button__variant__cta button__size__lg"
                         type="button"
                         value="Save"
                         onClick={handleSave}

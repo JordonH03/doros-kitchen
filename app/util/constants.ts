@@ -13,12 +13,18 @@ export const MAX_TIME = 120; // Minutes
 export const MAX_INTERVAL = 100;
 
 export const INITIAL_SETTINGS: TimerState = {
-    pomodoro: 25,
-    shortBreak: 5,
-    longBreak: 15,
+    pomodoro: 1,
+    shortBreak: 1,
+    longBreak: 1,
     isRunning: false,
     timeLeft: 25 * MINUTES_2_MILLISECONDS,
     currentSession: "pomodoro",
-    interval: 4,
-    maxInterval: 4,
+    interval: 1,
+    maxInterval: 1,
+}
+
+export const SESSION_VALUES: Record<string, string> = {
+    pomodoro: 'Pomodoro',
+    shortBreak: 'Short Break',
+    longBreak: 'Long Break'
 }

@@ -1,3 +1,3 @@
-@import './settings/settings';
-@import './settings/settingsField';
-@import './button/button.scss';
+@use 'settings/settings';
+@use 'settings/settingsField';
+@use 'button/button';

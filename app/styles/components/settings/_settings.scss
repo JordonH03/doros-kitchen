@@ -1,0 +1,28 @@
+@use "../../variables";
+
+.cta
+{
+    &__group
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.settings-form
+{
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    margin-bottom: 1rem;
+
+    
+}
+
+.settings-modal
+{
+    background-color: variables.$primary-tint;
+    border-radius: 16px;
+    border: 2px solid variables.$text-base;
+}

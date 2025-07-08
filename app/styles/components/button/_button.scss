@@ -1,0 +1,107 @@
+@use '../../variables';
+@use '../../typography';
+
+@mixin variant($type) {
+
+    @if $type == 'cta' {
+        background-color: variables.$accent-base;
+        border-color: variables.$accent-tint;
+
+        &:hover {
+            background-color: variables.$accent-highlight;
+        }
+    } @else if $type == 'primary' {
+        background-color: variables.$primary-base;
+        border-color: variables.$primary-tint;
+
+        &:hover {
+            background-color: variables.$primary-highlight;
+        }
+    } @else { // default 'white'
+        background-color: variables.$white-base;
+        border-color: variables.$white-tint;
+
+        &:hover {
+            background-color: variables.$white-highlight;
+        }
+    }
+}
+
+.button
+{
+
+    border-style: solid;
+    border-width: 4px;
+    cursor: default;
+
+    &:hover
+    {
+        cursor: pointer;
+    }
+
+    &-round
+    {
+        border-radius: 100%;
+    }
+
+    &-icon
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: .5rem;
+
+        & > svg
+        {
+            color: variables.$text-base;
+        }
+    }
+
+    &__settings
+    {
+        width: 32px;
+        height: 32px;
+    }
+
+
+    &__variant
+    {
+        &__white { @include variant('white'); }
+        &__cta { @include variant('cta'); }
+        &__primary { @include variant('primary'); }
+    }
+
+    &__size
+    {
+        &__xs
+        {
+            @include typography.text(xs);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.75rem;
+        }
+        &__sm
+        {
+            @include typography.text(sm);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.75rem;
+        }
+        &__md
+        {
+            @include typography.text(md);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.75rem;
+        }
+        &__lg
+        {
+            @include typography.text(lg);
+            padding: 0.25rem 1rem;
+            border-radius: 1rem;
+        }
+        &__xl
+        {
+            @include typography.text(xl);
+            padding: 0.25rem 1.25rem;
+            border-radius: 1.25rem;
+        }
+    }
+}
