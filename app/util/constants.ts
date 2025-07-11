@@ -12,19 +12,26 @@ export const MAX_TIME = 120; // Minutes
 
 export const MAX_INTERVAL = 100;
 
-export const INITIAL_SETTINGS: TimerState = {
-    pomodoro: 1,
-    shortBreak: 1,
-    longBreak: 1,
-    isRunning: false,
-    timeLeft: 25 * MINUTES_2_MILLISECONDS,
-    currentSession: "pomodoro",
-    interval: 1,
-    maxInterval: 1,
+export enum SessionType {
+    POMODORO,
+    SHORT_BREAK,
+    LONG_BREAK
 }
 
-export const SESSION_VALUES: Record<string, string> = {
-    pomodoro: 'Pomodoro',
-    shortBreak: 'Short Break',
-    longBreak: 'Long Break'
+export const INITIAL_SETTINGS: TimerState = {
+    pomodoro: 25,
+    shortBreak: 5,
+    longBreak: 15,
+    isRunning: false,
+    lastTick: null,
+    timeLeft: 25 * MINUTES_2_MILLISECONDS,
+    currentSession: SessionType.POMODORO,
+    interval: 4,
+    maxInterval: 4,
+}
+
+export const SESSION_LABELS: Record<string, string> = {
+    [SessionType.POMODORO]: 'Pomodoro',
+    [SessionType.SHORT_BREAK]: 'Short Break',
+    [SessionType.LONG_BREAK]: 'Long Break'
 }

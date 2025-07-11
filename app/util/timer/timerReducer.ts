@@ -1,11 +1,8 @@
 import { useReducer } from "react"
-import type { TimerAction, TimerState } from "../types"
-import { INITIAL_SETTINGS, MINUTES_2_MILLISECONDS } from "../constants"
+import type { TimerAction, TimerSettings, TimerState } from "../types"
+import { INITIAL_SETTINGS, MINUTES_2_MILLISECONDS, SessionType } from "../constants"
 
 export function timerReducer(state: TimerState, action: TimerAction): TimerState {
-    const STUDY_SESSION = "pomodoro"
-    const BREAK_SESSION = "short"
-    const LONG_BREAK_SESSION = "long"
 
     switch (action.type) {
         case "SET_POMODORO":
@@ -20,44 +17,49 @@ export function timerReducer(state: TimerState, action: TimerAction): TimerState
             return {
                 ...state,
                 isRunning: false,
+                lastTick: Date.now(),
                 timeLeft: state.pomodoro * MINUTES_2_MILLISECONDS,
-                currentSession: STUDY_SESSION,
+                currentSession: SessionType.POMODORO,
                 interval: state.maxInterval,
             }
         case "TICK":
-            if (state.timeLeft <= 0) {
+            if (!state.isRunning || state.timeLeft <= 0) {
                 return state
             }
-            return { ...state, timeLeft: state.timeLeft - 10 }
+
+            const elapsed = state.lastTick ? action.payload - state.lastTick : 0
+            const newTime = Math.max(0, state.timeLeft - elapsed)
+
+            return { ...state, timeLeft: newTime, lastTick: action.payload }
         case "SET_INTERVAL":
             return { ...state, maxInterval: action.payload, interval: action.payload }
         case "SWITCH_SESSION":
-            if (state.currentSession === STUDY_SESSION) {
+            if (state.currentSession === SessionType.POMODORO) {
                 if (state.interval > 1) {
                     return {
                         ...state,
-                        currentSession: BREAK_SESSION,
+                        currentSession: SessionType.SHORT_BREAK,
                         timeLeft: state.shortBreak * MINUTES_2_MILLISECONDS,
                         interval: state.interval - 1,
                     }
                 } else {
                     return {
                         ...state,
-                        currentSession: LONG_BREAK_SESSION,
+                        currentSession: SessionType.LONG_BREAK,
                         timeLeft: state.longBreak * MINUTES_2_MILLISECONDS,
                         interval: state.interval - 1,
                     }
                 }
-            } else if (state.currentSession === BREAK_SESSION) {
+            } else if (state.currentSession === SessionType.SHORT_BREAK) {
                 return {
                     ...state,
-                    currentSession: STUDY_SESSION,
+                    currentSession: SessionType.POMODORO,
                     timeLeft: state.pomodoro * MINUTES_2_MILLISECONDS,
                 }
             } else {
                 return {
                     ...state,
-                    currentSession: STUDY_SESSION,
+                    currentSession: SessionType.POMODORO,
                     timeLeft: state.pomodoro * MINUTES_2_MILLISECONDS,
                     interval: state.maxInterval,
                 }
@@ -65,12 +67,15 @@ export function timerReducer(state: TimerState, action: TimerAction): TimerState
         case "UPDATE_TIMER":
             return {
                 ...state,
+                currentSession: SessionType.POMODORO,
+                interval: action.payload.interval,
+                isRunning: false,
+                lastTick: null,
+                longBreak: action.payload.longBreak,
+                maxInterval: action.payload.interval,
                 pomodoro: action.payload.pomodoro,
                 shortBreak: action.payload.shortBreak,
-                longBreak: action.payload.longBreak,
-                interval: action.payload.interval,
                 timeLeft: action.payload.pomodoro * MINUTES_2_MILLISECONDS,
-                currentSession: STUDY_SESSION,
             }
         default:
             return state
@@ -83,6 +88,14 @@ export function usePomodoroTimer() {
     const { pomodoro, shortBreak, longBreak } = state
 
 
+    function resetTimer() {
+        dispatch({ type: "RESET_TIMER" })
+    }
+
+    function setLongBreak() {
+        dispatch({ type: "SET_LONG_BREAK", payload: longBreak })
+    }
+
     function setPomodoro() {
         dispatch({ type: "SET_POMODORO", payload: pomodoro })
     }
@@ -91,29 +104,31 @@ export function usePomodoroTimer() {
         dispatch({ type: "SET_SHORT_BREAK", payload: shortBreak })
     }
 
-    function setLongBreak() {
-        dispatch({ type: "SET_LONG_BREAK", payload: longBreak })
+    function switchSession() {
+        dispatch({ type: "SWITCH_SESSION" })
+    }
+
+    function tick() {
+        dispatch({ type: "TICK", payload: Date.now() })
     }
 
     function toggleTimer() {
         dispatch({ type: "TOGGLE_TIMER" })
     }
 
-    function resetTimer() {
-        dispatch({ type: "RESET_TIMER" })
-    }
-
-    function transitionSession() {
-        dispatch({ type: "SWITCH_SESSION" })
+    function updateTimer(settings: TimerSettings) {
+        dispatch({ type: "UPDATE_TIMER", payload: settings })
     }
 
     return {
         state,
+        resetTimer,
         setPomodoro,
         setShortBreak,
         setLongBreak,
-        resetTimer,
+        switchSession,
+        tick,
         toggleTimer,
-        transitionSession,
+        updateTimer,
     }
 }

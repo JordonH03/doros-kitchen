@@ -3,7 +3,7 @@ import Settings from "@/components/settings"
 import { useTimer } from "@/util/timer/TimerContext"
 import { GearIcon, PauseIcon, PlayIcon } from "@radix-ui/react-icons"
 import { formatTime } from "@/util/timer/timerUtils"
-import { TICK_INTERVAL } from "@/util/constants"
+import { SESSION_LABELS, TICK_INTERVAL } from "@/util/constants"
 
 export default function Home() {
     const { state, dispatch } = useTimer()
@@ -12,6 +12,12 @@ export default function Home() {
 
     useEffect(() => {
         if (state.isRunning && state.timeLeft > 0) {
+            if (!timerRef.current) {
+                timerRef.current = setInterval(() => {
+                    dispatch({ type: "TICK", payload: Date.now() })
+                }, TICK_INTERVAL);
+            }
+
             if (!timerRef) {
                 return;
             }
@@ -21,8 +27,11 @@ export default function Home() {
             }
 
             timerRef.current = setInterval(() => {
-                dispatch({ type: "TICK" })
+                dispatch({ type: "TICK", payload: Date.now() })
             }, TICK_INTERVAL)
+        } else if (timerRef.current) {
+            clearInterval(timerRef.current)
+            timerRef.current = null
         }
 
         if (state.timeLeft <= 0) {
@@ -32,6 +41,7 @@ export default function Home() {
         return () => {
             if (timerRef.current) {
                 clearInterval(timerRef.current)
+                timerRef.current = null
             }
         }
     }, [state.isRunning, state.timeLeft])
@@ -42,7 +52,7 @@ export default function Home() {
                 <button className="button button-round button-icon button__variant__primary" onClick={() => setSettingsOpen(true)}><GearIcon /></button>
                 <div className="timer-container">
                     <div className="timer-labels">
-                        <p className="session-label">{SESSION_VALUES[state.currentSession]}</p>
+                        <p className="session-label">{SESSION_LABELS[state.currentSession]}</p>
                         <p className="timer">{formatTime(state.timeLeft)}</p>
                     </div>
                     <button className="button button-icon button-round button__variant__cta button__size__lg" onClick={() => dispatch({ type: "TOGGLE_TIMER" })}>
