@@ -40,14 +40,12 @@ export function timerReducer(state: TimerState, action: TimerAction): TimerState
                         ...state,
                         currentSession: SessionType.SHORT_BREAK,
                         timeLeft: state.shortBreak * MINUTES_2_MILLISECONDS,
-                        interval: state.interval - 1,
                     }
                 } else {
                     return {
                         ...state,
                         currentSession: SessionType.LONG_BREAK,
                         timeLeft: state.longBreak * MINUTES_2_MILLISECONDS,
-                        interval: state.interval - 1,
                     }
                 }
             } else if (state.currentSession === SessionType.SHORT_BREAK) {
@@ -55,6 +53,7 @@ export function timerReducer(state: TimerState, action: TimerAction): TimerState
                     ...state,
                     currentSession: SessionType.POMODORO,
                     timeLeft: state.pomodoro * MINUTES_2_MILLISECONDS,
+                    interval: state.interval - 1,
                 }
             } else {
                 return {
