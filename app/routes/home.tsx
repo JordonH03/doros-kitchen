@@ -35,7 +35,7 @@ export default function Home() {
         }
 
         if (state.timeLeft <= 0) {
-            const audio = new Audio("/ding.mp3")
+            const audio = new Audio("/alarm.mp3")
             audio.play()
             dispatch({ type: "SWITCH_SESSION" })
         }
