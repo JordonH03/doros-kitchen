@@ -51,13 +51,13 @@ export default function Home() {
     return (
         <div id="root">
             <main>
-                <button className="button button-round button-icon button__variant__primary" onClick={() => setSettingsOpen(true)}><GearIcon /></button>
+                <button className="button button-icon button__variant__primary settings-button" onClick={() => setSettingsOpen(true)}><GearIcon /></button>
                 <div className="timer-container">
                     <div className="timer-labels">
                         <p className="session-label">{SESSION_LABELS[state.currentSession]}</p>
                         <p className="timer">{formatTime(state.timeLeft)}</p>
                     </div>
-                    <button className="button button-icon button-round button__variant__cta button__size__lg" onClick={() => dispatch({ type: "TOGGLE_TIMER" })}>
+                    <button className="button button-play-pause button-icon button__variant__cta" onClick={() => dispatch({ type: "TOGGLE_TIMER" })}>
                         {state.isRunning ? (
                             <PauseIcon />
                         ) : (

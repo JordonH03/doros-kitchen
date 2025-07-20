@@ -1,28 +1,98 @@
+@use "../../typography";
+@use "../../components/button/button";
 @use "../../variables";
 
-.cta
+.settings-button
 {
-    &__group
-    {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-}
-
-.settings-form
-{
-    display: flex;
-    flex-direction: column;
-    width: 320px;
-    margin-bottom: 1rem;
-
-    
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
 }
 
 .settings-modal
 {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-width: 0;
+
     background-color: variables.$primary-tint;
-    border-radius: 16px;
-    border: 2px solid variables.$text-base;
+
+    &:open
+    {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        grid-template-columns: 1fr;
+    }
+
+    .form-heading
+    {
+        @include typography.text('xl');
+        width: 100%;
+        text-align: center;
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    .settings-form
+    {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 1rem;
+        grid-row: 2;
+        grid-column: 1;
+        min-height: 0;
+    }
+
+    .cta__group
+    {
+        display: flex;
+        flex-direction: column;
+        grid-row: 3;
+        grid-column: 1;
+
+        & .button
+        {
+            margin-bottom: 1rem;
+        }
+    }
+
+    @media screen and (min-width: variables.$breakpoint-md)
+    {
+        height: auto;
+        max-width: 300px;
+        height: fit-content;
+        border-radius: 16px;
+        border-width: 4px;
+        margin: auto;
+
+        .form-heading
+        {
+            @include typography.text('xl');
+        }
+
+        .settings-form
+        {
+            min-height: 0;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .cta__group
+        {
+            flex-direction: row;
+            justify-content: space-between;
+
+            & .button
+            {
+                @include button.size('lg');
+                font-size: 20px;
+                padding: 0.5rem 1rem;
+                margin-bottom: 0;
+            }
+        }
+        
+    }
 }

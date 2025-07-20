@@ -27,29 +27,50 @@
     }
 }
 
+@mixin size($size) {
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.75rem;
+
+    @if $size == 'xs' {
+        @include typography.text(xs);
+    } @else if $size == 'sm' {
+        @include typography.text(sm);
+    } @else if $size == 'md' {
+        @include typography.text(md);
+    } @else if $size == 'lg' {
+        @include typography.text(lg);
+        padding: 0.25rem 1rem;
+        border-radius: 1rem;
+    } @else if $size == 'xl' {
+        @include typography.text('lg');
+        padding: 0.75rem 1.25rem;
+        border-radius: 1.25rem;
+    }
+}
+
+button
+{
+    cursor: default;
+    
+    &:hover
+    {
+        cursor: pointer;
+    }
+}
+
 .button
 {
 
     border-style: solid;
     border-width: 4px;
-    cursor: default;
-
-    &:hover
-    {
-        cursor: pointer;
-    }
-
-    &-round
-    {
-        border-radius: 100%;
-    }
 
     &-icon
     {
+        border-radius: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: .5rem;
+        padding: 0.75rem;
 
         & > svg
         {
@@ -57,10 +78,21 @@
         }
     }
 
+    &-play-pause > svg
+    {
+        width: 48px;
+        height: auto;
+    }
+
     &__settings
     {
-        width: 32px;
-        height: 32px;
+        width: 100%;
+        height: 100%;
+
+        @media screen and (min-width: variables.$breakpoint-md) {
+            width: auto;
+            height: auto;
+        }
     }
 
 
@@ -75,33 +107,23 @@
     {
         &__xs
         {
-            @include typography.text(xs);
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.75rem;
+            @include size('xs');
         }
         &__sm
         {
-            @include typography.text(sm);
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.75rem;
+            @include size('sm');
         }
         &__md
         {
-            @include typography.text(md);
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.75rem;
+            @include size('md');
         }
         &__lg
         {
-            @include typography.text(lg);
-            padding: 0.25rem 1rem;
-            border-radius: 1rem;
+            @include size('lg');
         }
         &__xl
         {
-            @include typography.text(xl);
-            padding: 0.25rem 1.25rem;
-            border-radius: 1.25rem;
+            @include size('xl');
         }
     }
 }

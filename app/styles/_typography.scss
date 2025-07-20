@@ -1,3 +1,5 @@
+@use "./variables";
+
 @mixin text($size) {
     @if $size == xs {
         font-size: 10px;
@@ -18,4 +20,37 @@
         font-size: 48px;
         line-height: normal;
     }
+}
+
+:root
+{
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+}
+
+h2
+{
+    font-family: 'Cherry Swash', cursive;
+    margin-top: 0;
+}
+
+p,
+label
+{
+    font-family: 'Alexandria', sans-serif;
+    font-weight: 400;
+}
+
+label
+{
+    font-size: 20px;
+}
+
+input
+{
+    font-family: 'Alexandria', cursive;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 16px;
+    padding-left: 4px;
 }

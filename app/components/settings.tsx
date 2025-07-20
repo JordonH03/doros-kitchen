@@ -89,21 +89,23 @@ export default function Settings({ isOpen, onClose }: ModalProps) {
                     min={MIN_INTERVAL}
                     defaultValue={state.interval}
                 />
-                <div className="cta__group">
-                    <input
-                        className="button button__variant__white button__size__lg"
-                        type="button"
-                        value="Cancel"
-                        onClick={onClose}
-                    />
-                    <input
-                        className="button button__variant__cta button__size__lg"
-                        type="button"
-                        value="Save"
-                        onClick={handleSave}
-                    />
-                </div>
             </form>
+            <div className="cta__group">
+                <button
+                    className="button button__variant__white button__size__xl button__settings button-cancel"
+                    type="button"
+                    onClick={onClose}
+                >
+                    Cancel
+                </button>
+                <button
+                    className="button button__variant__cta button__size__xl button__settings"
+                    type="button"
+                    onClick={handleSave}
+                >
+                    Save
+                </button>
+            </div>
         </dialog>
     )
 }
