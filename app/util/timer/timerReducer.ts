@@ -12,7 +12,7 @@ export function timerReducer(state: TimerState, action: TimerAction): TimerState
         case "SET_LONG_BREAK":
             return { ...state, longBreak: action.payload }
         case "TOGGLE_TIMER":
-            return { ...state, isRunning: !state.isRunning }
+            return { ...state, isRunning: !state.isRunning, lastTick: Date.now() }
         case "RESET_TIMER":
             return {
                 ...state,
