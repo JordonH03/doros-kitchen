@@ -17,7 +17,7 @@ export default function SettingsField({
 }: ISettingsField) {
     return (
         <div className="settings-field">
-            <label htmlFor={fieldName}>{labelText}</label>
+            <label className="prevent-select" htmlFor={fieldName}>{labelText}</label>
             <input
                 name={fieldName}
                 required

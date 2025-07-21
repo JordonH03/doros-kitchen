@@ -54,8 +54,8 @@ export default function Home() {
                 <button className="button button-icon button__variant__primary settings-button" onClick={() => setSettingsOpen(true)}><GearIcon /></button>
                 <div className="timer-container">
                     <div className="timer-labels">
-                        <p className="session-label">{SESSION_LABELS[state.currentSession]}</p>
-                        <p className="timer">{formatTime(state.timeLeft)}</p>
+                        <p className="session-label prevent-select">{SESSION_LABELS[state.currentSession]}</p>
+                        <p className="timer prevent-select">{formatTime(state.timeLeft)}</p>
                     </div>
                     <button className="button button-play-pause button-icon button__variant__cta" onClick={() => dispatch({ type: "TOGGLE_TIMER" })}>
                         {state.isRunning ? (

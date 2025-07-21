@@ -19,3 +19,9 @@ main
     margin: 0;
     padding: 0;
 }
+
+.prevent-select {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

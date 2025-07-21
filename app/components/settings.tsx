@@ -59,7 +59,7 @@ export default function Settings({ isOpen, onClose }: ModalProps) {
 
     return (
         <dialog id="settings-modal" className="settings-modal" ref={modalRef}>
-            <h2 className="form-heading">Settings</h2>
+            <h2 className="form-heading prevent-select">Settings</h2>
             <form className="settings-form" ref={formRef}>
                 <SettingsField
                     labelText="Pomodoro"
