@@ -10,14 +10,22 @@
 
     & .timer-labels
     {
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         background-color: variables.$accent-base;
         border: 4px solid variables.$text-base;
         padding: 2rem;
         margin-bottom: 2rem;
+        width: 100vw;
+        height: 300px;
+
+        @media screen and (min-width: 300px)
+        {
+            max-width: 300px;
+        }
     }
 
     & .session-label {
