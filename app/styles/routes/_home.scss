@@ -1,14 +1,14 @@
 @use '../typography';
 @use '../variables';
 
-.timer-container
+.timer__container
 {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
 
-    & .timer-labels
+    & .timer__labels
     {
         box-sizing: border-box;
         display: flex;
@@ -28,7 +28,7 @@
         }
     }
 
-    & .session-label {
+    & .timer__label {
         @include typography.text('xl');
 
         font-weight: 300;
@@ -37,7 +37,7 @@
         margin: 0 0 2rem 0;
     }
 
-    & .timer {
+    & .timer__value {
         @include typography.text('2xl');
 
         font-weight: 400;

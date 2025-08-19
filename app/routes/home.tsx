@@ -52,12 +52,12 @@ export default function Home() {
         <div id="root">
             <main>
                 <button aria-label="Open settings" className="button button-icon button__variant__primary settings-button" onClick={() => setSettingsOpen(true)}><GearIcon /></button>
-                <div className="timer-container">
-                    <div className="timer-labels">
-                        <p className="session-label prevent-select">{SESSION_LABELS[state.currentSession]}</p>
-                        <p className="timer prevent-select">{formatTime(state.timeLeft)}</p>
+                <div className="timer__container">
+                    <div className="timer__labels">
+                        <p className="timer__label prevent-select">{SESSION_LABELS[state.currentSession]}</p>
+                        <p className="timer__value prevent-select">{formatTime(state.timeLeft)}</p>
                     </div>
-                    <button aria-label={state.isRunning ? "Timer started" : "Timer paused"} className="button button-play-pause button-icon button__variant__cta" onClick={() => dispatch({ type: "TOGGLE_TIMER" })}>
+                    <button aria-label={state.isRunning ? "Timer started" : "Timer paused"} className="button button-icon button__variant__cta" onClick={() => dispatch({ type: "TOGGLE_TIMER" })}>
                         {state.isRunning ? (
                             <PauseIcon />
                         ) : (

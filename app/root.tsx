@@ -24,7 +24,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <meta charSet="UTF-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
                 <Links />
-                <title>Vite + React + TS</title>
+                <title>Doro's Kitchen</title>
             </head>
             <body>
                 {children}
@@ -69,7 +69,7 @@ export function links() {
         {
             rel: "icon",
             type: "image/svg+xml",
-            href: "/vite.svg",
+            href: "/favicon.svg",
         },
         {
             rel: "manifest",

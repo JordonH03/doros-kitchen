@@ -48,16 +48,6 @@
     }
 }
 
-button
-{
-    cursor: default;
-    
-    &:hover
-    {
-        cursor: pointer;
-    }
-}
-
 .button
 {
 
@@ -71,9 +61,12 @@ button
         align-items: center;
         justify-content: center;
         padding: 0.75rem;
-
+        
         & > svg
         {
+            width: 30px;
+            height: 30px;
+
             color: variables.$text-base;
         }
     }
@@ -81,7 +74,7 @@ button
     &-play-pause > svg
     {
         width: 48px;
-        height: auto;
+        height: 48px;
     }
 
     &__settings
